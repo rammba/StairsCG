@@ -114,6 +114,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="specification\RG Projektni zadatak 16.1.docx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependencies\SharpGL.dll" />
