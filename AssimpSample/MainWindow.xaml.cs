@@ -88,11 +88,37 @@ namespace AssimpSample
         {
             switch (e.Key)
             {
-                case Key.F10: this.Close(); break;
-                case Key.W: m_world.RotationX -= 5.0f; break;
-                case Key.S: m_world.RotationX += 5.0f; break;
-                case Key.A: m_world.RotationY -= 5.0f; break;
-                case Key.D: m_world.RotationY += 5.0f; break;
+                case Key.F4: 
+                    {
+                        Application.Current.Shutdown();
+                        break;
+                    }
+                case Key.E: 
+                    {
+                        if (m_world.RotationX >= 0)
+                        {
+                            m_world.RotationX -= 5.0f;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nije dozvoljeno ici ispod podloge!");
+                        }
+                        break;
+                    }
+                case Key.D:
+                    {
+                        if (m_world.RotationX <= 85)
+                        {
+                            m_world.RotationX += 5.0f;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nije dozvoljeno da podloga bude postavljena naopako!");
+                        }
+                        break;
+                    }
+                case Key.S: m_world.RotationY -= 5.0f; break;
+                case Key.F: m_world.RotationY += 5.0f; break;
                 case Key.Add: m_world.SceneDistance -= 3.0f; break;
                 case Key.Subtract: m_world.SceneDistance += 3.0f; break;
                 case Key.F2:
