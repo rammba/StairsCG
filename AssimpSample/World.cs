@@ -161,6 +161,9 @@ namespace AssimpSample
             gl.Enable(OpenGL.GL_CULL_FACE);
             gl.FrontFace(OpenGL.GL_CCW);
 
+            gl.Enable(OpenGL.GL_COLOR_MATERIAL);
+            gl.ColorMaterial(OpenGL.GL_FRONT, OpenGL.GL_AMBIENT_AND_DIFFUSE);
+
             gl.Enable(OpenGL.GL_TEXTURE_2D);
             gl.TexEnv(OpenGL.GL_TEXTURE_ENV, OpenGL.GL_TEXTURE_ENV_MODE, OpenGL.GL_ADD);
 
@@ -188,9 +191,34 @@ namespace AssimpSample
                 image.UnlockBits(imageData);
                 image.Dispose();
             }
+            //SetupLighting(gl);
 
             m_scene.LoadScene();
             m_scene.Initialize();
+        }
+
+        private void SetupLighting(OpenGL gl)
+        {
+            gl.Enable(OpenGL.GL_NORMALIZE);
+
+            gl.ShadeModel(OpenGL.GL_SMOOTH);
+
+            float[] global_ambient = new float[] { 0.2f, 0.2f, 0.2f, 1.0f };
+            //gl.LightModel(OpenGL.GL_LIGHT_MODEL_AMBIENT, global_ambient);
+
+            float[] light0pos = new float[] { 10.0f, 0f, 0.0f, 1.0f };
+            float[] light0ambient = new float[] { 0.5f, 0.5f, 0.5f, 1.0f };
+            float[] light0diffuse = new float[] { 1f, 1f, 0f, 1.0f }; //color
+
+            gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, light0pos);
+            gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_AMBIENT, light0ambient);
+            gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE, light0diffuse);
+
+            gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_SPOT_CUTOFF, 180.0f);
+
+            gl.Enable(OpenGL.GL_LIGHTING);
+            gl.Enable(OpenGL.GL_LIGHT0);
+            //gl.Enable(OpenGL.GL_LIGHT1);
         }
 
         /// <summary>
@@ -212,6 +240,7 @@ namespace AssimpSample
             gl.Rotate(m_xRotation, 1.0f, 0.0f, 0.0f);
             gl.Rotate(m_yRotation, 0.0f, 1.0f, 0.0f);
 
+            SetupLighting(gl);
             DrawHuman(gl);
             DrawCylinder(gl);
             DrawSurface(gl);
@@ -226,7 +255,7 @@ namespace AssimpSample
         private void DrawHuman(OpenGL gl)
         {
             gl.PushMatrix();
-            gl.Translate(5f, 0.7f, 0f);
+            gl.Translate(5f, 0.7f, 10f);
             m_scene.Draw();
             gl.PopMatrix();
         }
@@ -264,16 +293,19 @@ namespace AssimpSample
         {
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, m_textures[(int)TextureObjects.Surface]);
             gl.PushMatrix();
-            gl.Color(0f, 1f, 0f);
 
             gl.Begin(OpenGL.GL_QUADS);
             gl.TexCoord(0.0f, 0.0f);
+            gl.Color(0f, 1f, 0f);
             gl.Vertex(10f, -1f, -16.85f);
-            gl.TexCoord(0.0f, 1.0f);
+            gl.TexCoord(0.0f, 10.0f);
+            gl.Color(0f, 0f, 1f);
             gl.Vertex(-10f, -1f, -16.85f);
-            gl.TexCoord(1.0f, 1.0f);
+            gl.TexCoord(10.0f, 10.0f);
+            gl.Color(1f, 1f, 0f);
             gl.Vertex(-10f, -1f, 17f);
-            gl.TexCoord(1.0f, 0.0f);
+            gl.TexCoord(10.0f, 0.0f);
+            gl.Color(1f, 0f, 0f);
             gl.Vertex(10f, -1f, 17f);
             gl.End();
             gl.PopMatrix();
