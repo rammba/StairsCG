@@ -3,13 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Stairs 16.1" Height="350" Width="525" 
         xmlns:sharpGL="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF" KeyDown="Window_KeyDown">
-    <Grid>
-        
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top">
+            <Label Content="Visina osobe: "/>
+            <ComboBox x:Name="humanCB" SelectionChanged="humanCB_SelectionChanged" SelectedValuePath="Content" SelectedIndex="3">
+                <ComboBoxItem Content="0,3"/>
+                <ComboBoxItem Content="0,5"/>
+                <ComboBoxItem Content="0,7"/>
+                <ComboBoxItem Content="1"/>
+                <ComboBoxItem Content="1,2"/>
+                <ComboBoxItem Content="1,5"/>
+                <ComboBoxItem Content="2,0"/>
+            </ComboBox>
+            <Label Content="Ambijentalna komponenta: "/>
+            <ComboBox x:Name="ambientCB" SelectionChanged="ambientCB_SelectionChanged" SelectedValuePath="Content" SelectedIndex="2">
+                <ComboBoxItem Content="0,1"/>
+                <ComboBoxItem Content="0,3"/>
+                <ComboBoxItem Content="0,5"/>
+                <ComboBoxItem Content="0,7"/>
+                <ComboBoxItem Content="1"/>
+            </ComboBox>
+        </ToolBar>
         <!-- The OpenGL control provides a OpenGL drawing surface. -->
         <sharpGL:OpenGLControl 
             Name="openGLControl" OpenGLDraw="openGLControl_OpenGLDraw" 
             OpenGLInitialized="openGLControl_OpenGLInitialized" Resized="openGLControl_Resized"
             DrawFPS="True" RenderContextType="FBO" FrameRate="10"/>
         
-    </Grid>
+    </DockPanel>
 </Window>

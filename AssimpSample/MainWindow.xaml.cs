@@ -30,6 +30,8 @@ namespace AssimpSample
         ///	 Instanca OpenGL "sveta" - klase koja je zaduzena za iscrtavanje koriscenjem OpenGL-a.
         /// </summary>
         World m_world = null;
+        float humanHeight = 0.0f;
+        float ambientPointLightValue = 0.0f;
 
         #endregion Atributi
 
@@ -44,6 +46,8 @@ namespace AssimpSample
             try
             {
                 m_world = new World(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "3D Models\\Bodymesh"), "Bodymesh.3DS", (int)openGLControl.ActualWidth, (int)openGLControl.ActualHeight, openGLControl.OpenGL);
+                m_world.HumanHeight = humanHeight;
+                m_world.AmbientPointLightValue = ambientPointLightValue;
             }
             catch (Exception e)
             {
@@ -141,6 +145,20 @@ namespace AssimpSample
                     }
                     break;
             }
+        }
+
+        private void humanCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            humanHeight = float.Parse(humanCB.SelectedValue.ToString());
+            if(m_world != null)
+                m_world.HumanHeight = humanHeight;
+        }
+
+        private void ambientCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ambientPointLightValue = float.Parse(ambientCB.SelectedValue.ToString());
+            if (m_world != null)
+                m_world.AmbientPointLightValue = ambientPointLightValue;
         }
     }
 }

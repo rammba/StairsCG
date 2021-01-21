@@ -63,6 +63,9 @@ namespace AssimpSample
         private uint[] m_textures = null;
         private string[] m_textureFiles = { "..//..//resources//metal.jpg", "..//..//resources//ceramic_tiles.jpg" };
 
+        private float humanHeight;
+        private float ambientPointLightValue;
+
         #endregion Atributi
 
         #region Properties
@@ -119,6 +122,18 @@ namespace AssimpSample
         {
             get { return m_height; }
             set { m_height = value; }
+        }
+
+        public float HumanHeight
+        {
+            get { return humanHeight; }
+            set { humanHeight = value; }
+        }
+
+        public float AmbientPointLightValue
+        {
+            get { return ambientPointLightValue; }
+            set { ambientPointLightValue = value; }
         }
 
         #endregion Properties
@@ -210,7 +225,7 @@ namespace AssimpSample
             //gl.LightModel(OpenGL.GL_LIGHT_MODEL_AMBIENT, global_ambient);
 
             float[] light0pos = new float[] { 10.0f, 0f, 0.0f, 1.0f };
-            float[] light0ambient = new float[] { 0.5f, 0.5f, 0.5f, 1.0f };
+            float[] light0ambient = new float[] { ambientPointLightValue, ambientPointLightValue, ambientPointLightValue, 1.0f };
             float[] light0diffuse = new float[] { 1f, 1f, 0f, 1.0f }; //color
             float[] light0specular = new float[] { 1f, 1f, 0f, 1.0f }; 
 
@@ -243,12 +258,12 @@ namespace AssimpSample
         {
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
             //gl.LookAt(5.0f, 7.0f, 0f, 5.0f, 7.0f, 1f, 0.0f, 1.0f, 0.0f);
-            
+            gl.Enable(OpenGL.GL_AUTO_NORMAL);
             gl.Viewport(0, 0, m_width, m_height);
             gl.MatrixMode(OpenGL.GL_PROJECTION);      // selektuj Projection Matrix
             gl.LoadIdentity();
             gl.Perspective(50.0, (double)m_width / (double)m_height, 0.5, 20000.0);
-            gl.LookAt(-3f, 12.5f, 4f, -2f, 11f, -1f, 0.0f, 1.0f, 0.0f);
+            //gl.LookAt(-3f, 12.5f, 4f, -3f, 11f, 1f, 0.0f, 1.0f, 0.0f);
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
             gl.LoadIdentity();
 
@@ -274,6 +289,7 @@ namespace AssimpSample
         {
             gl.PushMatrix();
             gl.Translate(2.5f, 10.6f, -0.9f);
+            gl.Scale(1f, humanHeight, 1f);
             m_scene.Draw();
             gl.PopMatrix();
         }
@@ -293,6 +309,7 @@ namespace AssimpSample
 
         private void DrawCylinder(OpenGL gl)
         {
+            gl.Disable(OpenGL.GL_AUTO_NORMAL);
             gl.PushMatrix();
             gl.Translate(0f, -1f, 0f);
             gl.Rotate(-90f, 0f, 0f);
@@ -306,10 +323,12 @@ namespace AssimpSample
             cil.CreateInContext(gl);
             cil.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
             gl.PopMatrix();
+            gl.Enable(OpenGL.GL_AUTO_NORMAL);
         }
 
         private void DrawSurface(OpenGL gl)
         {
+            gl.Disable(OpenGL.GL_AUTO_NORMAL);
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, m_textures[(int)TextureObjects.Surface]);
             gl.PushMatrix();
 
@@ -329,6 +348,7 @@ namespace AssimpSample
             gl.Vertex(10f, -1f, 17f);
             gl.End();
             gl.PopMatrix();
+            gl.Enable(OpenGL.GL_AUTO_NORMAL);
         }
 
         private void DrawStairs(OpenGL gl)
