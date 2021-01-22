@@ -30,8 +30,9 @@ namespace AssimpSample
         ///	 Instanca OpenGL "sveta" - klase koja je zaduzena za iscrtavanje koriscenjem OpenGL-a.
         /// </summary>
         World m_world = null;
-        float humanHeight = 0.0f;
-        float ambientPointLightValue = 0.0f;
+        public static float humanHeight = 0.0f;
+        public static float ambientPointLightValue = 0.0f;
+        public static int animationSpeed = 0;
 
         #endregion Atributi
 
@@ -46,8 +47,6 @@ namespace AssimpSample
             try
             {
                 m_world = new World(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "3D Models\\Bodymesh"), "Realistic_White_Male_Low_Poly.obj", (int)openGLControl.ActualWidth, (int)openGLControl.ActualHeight, openGLControl.OpenGL);
-                m_world.HumanHeight = humanHeight;
-                m_world.AmbientPointLightValue = ambientPointLightValue;
             }
             catch (Exception e)
             {
@@ -173,16 +172,20 @@ namespace AssimpSample
 
         private void humanCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            humanHeight = float.Parse(humanCB.SelectedValue.ToString());
-            if(m_world != null && !m_world.AnimationInProgress)
-                m_world.HumanHeight = humanHeight;
+            if (m_world == null || !m_world.AnimationInProgress)
+                humanHeight = float.Parse(humanCB.SelectedValue.ToString());
         }
 
         private void ambientCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ambientPointLightValue = float.Parse(ambientCB.SelectedValue.ToString());
-            if (m_world != null && !m_world.AnimationInProgress)
-                m_world.AmbientPointLightValue = ambientPointLightValue;
+            if (m_world == null || !m_world.AnimationInProgress)
+                ambientPointLightValue = float.Parse(ambientCB.SelectedValue.ToString());
+        }
+
+        private void animationSpeedCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (m_world == null || !m_world.AnimationInProgress)
+                animationSpeed = int.Parse(animationSpeedCB.SelectedValue.ToString());
         }
     }
 }

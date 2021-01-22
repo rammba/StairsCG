@@ -6,7 +6,7 @@
     <DockPanel>
         <ToolBar DockPanel.Dock="Top">
             <Label Content="Visina osobe: "/>
-            <ComboBox x:Name="humanCB" SelectionChanged="humanCB_SelectionChanged" SelectedValuePath="Content" SelectedIndex="3">
+            <ComboBox x:Name="humanCB" SelectionChanged="humanCB_SelectionChanged" SelectedValuePath="Content" SelectedIndex="3" Width="35">
                 <ComboBoxItem Content="0,3"/>
                 <ComboBoxItem Content="0,5"/>
                 <ComboBoxItem Content="0,7"/>
@@ -16,12 +16,19 @@
                 <ComboBoxItem Content="2,0"/>
             </ComboBox>
             <Label Content="Ambijentalna komponenta: "/>
-            <ComboBox x:Name="ambientCB" SelectionChanged="ambientCB_SelectionChanged" SelectedValuePath="Content" SelectedIndex="2">
+            <ComboBox x:Name="ambientCB" SelectionChanged="ambientCB_SelectionChanged" SelectedValuePath="Content" SelectedIndex="2" Width="35">
                 <ComboBoxItem Content="0,1"/>
                 <ComboBoxItem Content="0,3"/>
                 <ComboBoxItem Content="0,5"/>
                 <ComboBoxItem Content="0,7"/>
                 <ComboBoxItem Content="1"/>
+            </ComboBox>
+            <Label Content="Brzina animacije u milisekundama: "/>
+            <ComboBox x:Name="animationSpeedCB" SelectionChanged="animationSpeedCB_SelectionChanged" SelectedValuePath="Content" SelectedIndex="1" Width="35">
+                <ComboBoxItem Content="5"/>
+                <ComboBoxItem Content="20"/>
+                <ComboBoxItem Content="50"/>
+                <ComboBoxItem Content="100"/>
             </ComboBox>
         </ToolBar>
         <!-- The OpenGL control provides a OpenGL drawing surface. -->

@@ -65,9 +65,6 @@ namespace AssimpSample
         private uint[] m_textures = null;
         private string[] m_textureFiles = { "..//..//resources//metal.jpg", "..//..//resources//ceramic_tiles.jpg" };
 
-        private float humanHeight;
-        private float ambientPointLightValue;
-
         private DispatcherTimer timer;
         private bool animationInProgress = false;
         private int iteration;
@@ -134,18 +131,6 @@ namespace AssimpSample
         {
             get { return m_height; }
             set { m_height = value; }
-        }
-
-        public float HumanHeight
-        {
-            get { return humanHeight; }
-            set { humanHeight = value; }
-        }
-
-        public float AmbientPointLightValue
-        {
-            get { return ambientPointLightValue; }
-            set { ambientPointLightValue = value; }
         }
 
         public bool AnimationInProgress
@@ -239,10 +224,10 @@ namespace AssimpSample
             gl.ShadeModel(OpenGL.GL_SMOOTH);
 
             float[] global_ambient = new float[] { 0.2f, 0.2f, 0.2f, 1.0f };
-            //gl.LightModel(OpenGL.GL_LIGHT_MODEL_AMBIENT, global_ambient);
+            gl.LightModel(OpenGL.GL_LIGHT_MODEL_AMBIENT, global_ambient);
 
-            float[] light0pos = new float[] { 10.0f, 0f, 0.0f, 1.0f };
-            float[] light0ambient = new float[] { ambientPointLightValue, ambientPointLightValue, ambientPointLightValue, 1.0f };
+            float[] light0pos = new float[] { 10.0f, -5f, 0.0f, 1.0f };
+            float[] light0ambient = new float[] { MainWindow.ambientPointLightValue, MainWindow.ambientPointLightValue, MainWindow.ambientPointLightValue, 1.0f };
             float[] light0diffuse = new float[] { 1f, 1f, 0f, 1.0f }; //color
             float[] light0specular = new float[] { 1f, 1f, 0f, 1.0f }; 
 
@@ -256,10 +241,12 @@ namespace AssimpSample
             float[] light1pos = new float[] { 0f, 100f, 0f, 1.0f };
             float[] light1ambient = new float[] { 0.5f, 0.5f, 0.5f, 1.0f };
             float[] light1diffuse = new float[] { 1f, 0f, 0f, 1.0f }; //color
+            float[] light1specular = new float[] { 1f, 0f, 0f, 1.0f };
 
             gl.Light(OpenGL.GL_LIGHT1, OpenGL.GL_POSITION, light1pos);
             gl.Light(OpenGL.GL_LIGHT1, OpenGL.GL_AMBIENT, light1ambient);
             gl.Light(OpenGL.GL_LIGHT1, OpenGL.GL_DIFFUSE, light1diffuse);
+            gl.Light(OpenGL.GL_LIGHT1, OpenGL.GL_SPECULAR, light1specular);
 
             gl.Light(OpenGL.GL_LIGHT1, OpenGL.GL_SPOT_CUTOFF, 40.0f);
 
@@ -306,7 +293,7 @@ namespace AssimpSample
         {
             gl.PushMatrix();
             gl.Translate(human_coordinateX, human_coordinateY-1.5, human_coordinateZ);
-            gl.Scale(1f * 0.03, humanHeight * 0.03, 1f * 0.03);
+            gl.Scale(1f * 0.03, MainWindow.humanHeight * 0.03, 1f * 0.03);
             gl.Rotate(human_rotateX, human_rotateY, human_rotateZ);
             m_scene.Draw();
             gl.PopMatrix();
@@ -393,7 +380,7 @@ namespace AssimpSample
             human_coordinateY = 10.6f;
             human_coordinateZ = -1f;
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(20);
+            timer.Interval = TimeSpan.FromMilliseconds(MainWindow.animationSpeed);
             timer.Tick += new EventHandler(AnimateHuman);
             timer.Start();
         }
