@@ -16,6 +16,8 @@ using SharpGL.SceneGraph.Core;
 using SharpGL;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace AssimpSample
 {
@@ -66,6 +68,16 @@ namespace AssimpSample
         private float humanHeight;
         private float ambientPointLightValue;
 
+        private DispatcherTimer timer;
+        private bool animationInProgress = false;
+        private int iteration;
+        private float human_rotateX = 0.0f;
+        private float human_rotateY = 0.0f;
+        private float human_rotateZ = 0.0f;
+        private float human_coordinateX = 2.5f;
+        private float human_coordinateY = 10.6f;
+        private float human_coordinateZ = -1f;
+        
         #endregion Atributi
 
         #region Properties
@@ -134,6 +146,11 @@ namespace AssimpSample
         {
             get { return ambientPointLightValue; }
             set { ambientPointLightValue = value; }
+        }
+
+        public bool AnimationInProgress
+        {
+            get { return animationInProgress; }
         }
 
         #endregion Properties
@@ -271,7 +288,7 @@ namespace AssimpSample
             gl.Translate(0.0f, 0.0f, -m_sceneDistance);
             gl.Rotate(m_xRotation, 1.0f, 0.0f, 0.0f);
             gl.Rotate(m_yRotation, 0.0f, 1.0f, 0.0f);
-            gl.Rotate(0f, 180f, 0f);
+            //gl.Rotate(0f, 180f, 0f);
 
             SetupLighting(gl);
             DrawHuman(gl);
@@ -288,8 +305,9 @@ namespace AssimpSample
         private void DrawHuman(OpenGL gl)
         {
             gl.PushMatrix();
-            gl.Translate(2.5f, 10.6f, -0.9f);
+            gl.Translate(human_coordinateX, human_coordinateY, human_coordinateZ);
             gl.Scale(1f, humanHeight, 1f);
+            gl.Rotate(human_rotateX, human_rotateY, human_rotateZ);
             m_scene.Draw();
             gl.PopMatrix();
         }
@@ -365,6 +383,118 @@ namespace AssimpSample
                 cube.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
                 gl.PopMatrix();
             }
+        }
+
+        public void Animation()
+        {
+            animationInProgress = true;
+            iteration = 0;
+            human_coordinateX = 2.5f;
+            human_coordinateY = 10.6f;
+            human_coordinateZ = -1f;
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(20);
+            timer.Tick += new EventHandler(AnimateHuman);
+            timer.Start();
+        }
+
+        public void AnimateHuman(object sender, EventArgs e)
+        {
+            if (iteration < 10)
+            {
+                To17thStep();
+            }
+            else if (iteration >= 10 && iteration < 20)
+            {
+                To14thStep();
+            }
+            else if (iteration >= 20 && iteration < 30)
+            {
+                To11thStep();
+            }
+            else if (iteration >= 30 && iteration < 40)
+            {
+                To8thStep();
+            }
+            else if (iteration >= 40 && iteration < 50)
+            {
+                To5thStep();
+            }
+            else if (iteration >= 50 && iteration < 60)
+            {
+                To2thStep();
+            }
+            else if (iteration >= 60 && iteration < 70)
+            {
+                ToFloor();
+            }
+            else
+            {
+                timer.Stop();
+                animationInProgress = false;
+            }
+        }
+
+        private void To17thStep()
+        {
+            iteration++;
+            human_coordinateX -= 0.05f;
+            human_coordinateY -= 0.15f;
+            human_coordinateZ += 0.3f;
+            //human_rotateY += -10f;
+        }
+
+        private void To14thStep()
+        {
+            iteration++;
+            human_coordinateX -= 0.25f;
+            human_coordinateY -= 0.15f;
+            human_coordinateZ += 0.05f;
+            //human_rotateY += -10f;
+        }
+
+        private void To11thStep()
+        {
+            iteration++;
+            human_coordinateX -= 0.22f;
+            human_coordinateY -= 0.15f;
+            human_coordinateZ -= 0.18f;
+            //human_rotateY += -10f;
+        }
+
+        private void To8thStep()
+        {
+            iteration++;
+            human_coordinateX += 0.03f;
+            human_coordinateY -= 0.15f;
+            human_coordinateZ -= 0.2f;
+            //human_rotateY += -10f;
+        }
+
+        private void To5thStep()
+        {
+            iteration++;
+            human_coordinateX += 0.29f;
+            human_coordinateY -= 0.15f;
+            human_coordinateZ -= 0.18f;
+            //human_rotateY += -10f;
+        }
+
+        private void To2thStep()
+        {
+            iteration++;
+            human_coordinateX += 0.23f;
+            human_coordinateY -= 0.15f;
+            human_coordinateZ += 0.23f;
+            //human_rotateY += -10f;
+        }
+
+        private void ToFloor()
+        {
+            iteration++;
+            human_coordinateY -= 0.09f;
+            human_coordinateZ += 0.2f;
+            //human_rotateY += -10f;
         }
 
         /// <summary>

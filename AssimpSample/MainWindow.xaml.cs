@@ -94,37 +94,61 @@ namespace AssimpSample
             {
                 case Key.F4: 
                     {
-                        Application.Current.Shutdown();
+                        if (!m_world.AnimationInProgress)
+                            Application.Current.Shutdown();
                         break;
                     }
                 case Key.E: 
                     {
-                        if (m_world.RotationX >= 0)
+                        if (!m_world.AnimationInProgress)
                         {
-                            m_world.RotationX -= 5.0f;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Nije dozvoljeno ici ispod podloge!");
+                            if(m_world.RotationX >= 0)
+                                m_world.RotationX -= 5.0f;
+                            else
+                                MessageBox.Show("Nije dozvoljeno ici ispod podloge!");
                         }
                         break;
                     }
                 case Key.D:
                     {
-                        if (m_world.RotationX <= 85)
+                        if (!m_world.AnimationInProgress)
                         {
-                            m_world.RotationX += 5.0f;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Nije dozvoljeno da podloga bude postavljena naopako!");
+                            if (m_world.RotationX <= 85)
+                                m_world.RotationX += 5.0f;
+                            else
+                                MessageBox.Show("Nije dozvoljeno da podloga bude postavljena naopako!");
                         }
                         break;
                     }
-                case Key.S: m_world.RotationY -= 5.0f; break;
-                case Key.F: m_world.RotationY += 5.0f; break;
-                case Key.Add: m_world.SceneDistance -= 3.0f; break;
-                case Key.Subtract: m_world.SceneDistance += 3.0f; break;
+                case Key.S:
+                    {
+                        if (!m_world.AnimationInProgress)
+                            m_world.RotationY -= 5.0f;
+                        break;
+                    }
+                case Key.F:
+                    {
+                        if (!m_world.AnimationInProgress)
+                            m_world.RotationY += 5.0f;
+                        break;
+                    }
+                case Key.Add:
+                    {
+                        if (!m_world.AnimationInProgress)
+                            m_world.SceneDistance -= 3.0f;
+                        break;
+                    }
+                case Key.Subtract:
+                    {
+                        if (!m_world.AnimationInProgress)
+                            m_world.SceneDistance += 3.0f;
+                        break;
+                    }
+                case Key.V:
+                    {
+                        m_world.Animation();
+                        break;
+                    }
                 case Key.F2:
                     OpenFileDialog opfModel = new OpenFileDialog();
                     bool result = (bool) opfModel.ShowDialog();
@@ -150,14 +174,14 @@ namespace AssimpSample
         private void humanCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             humanHeight = float.Parse(humanCB.SelectedValue.ToString());
-            if(m_world != null)
+            if(m_world != null && !m_world.AnimationInProgress)
                 m_world.HumanHeight = humanHeight;
         }
 
         private void ambientCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ambientPointLightValue = float.Parse(ambientCB.SelectedValue.ToString());
-            if (m_world != null)
+            if (m_world != null && !m_world.AnimationInProgress)
                 m_world.AmbientPointLightValue = ambientPointLightValue;
         }
     }
