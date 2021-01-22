@@ -305,8 +305,8 @@ namespace AssimpSample
         private void DrawHuman(OpenGL gl)
         {
             gl.PushMatrix();
-            gl.Translate(human_coordinateX, human_coordinateY, human_coordinateZ);
-            gl.Scale(1f, humanHeight, 1f);
+            gl.Translate(human_coordinateX, human_coordinateY-1.5, human_coordinateZ);
+            gl.Scale(1f * 0.03, humanHeight * 0.03, 1f * 0.03);
             gl.Rotate(human_rotateX, human_rotateY, human_rotateZ);
             m_scene.Draw();
             gl.PopMatrix();
