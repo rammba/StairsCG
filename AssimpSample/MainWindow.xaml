@@ -14,6 +14,7 @@
                 <ComboBoxItem Content="1,2"/>
                 <ComboBoxItem Content="1,5"/>
                 <ComboBoxItem Content="2,0"/>
+                <ComboBoxItem Content="0,0"/>
             </ComboBox>
             <Label Content="Ambijentalna komponenta: "/>
             <ComboBox x:Name="ambientCB" SelectionChanged="ambientCB_SelectionChanged" SelectedValuePath="Content" SelectedIndex="2" Width="35">

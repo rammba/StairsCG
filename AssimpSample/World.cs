@@ -48,7 +48,7 @@ namespace AssimpSample
         /// <summary>
         ///	 Udaljenost scene od kamere.
         /// </summary>
-        private float m_sceneDistance = 30f;
+        private float m_sceneDistance = 30.0f;
 
         /// <summary>
         ///	 Sirina OpenGL kontrole u pikselima.
@@ -379,6 +379,7 @@ namespace AssimpSample
             human_coordinateX = 2.5f;
             human_coordinateY = 10.6f;
             human_coordinateZ = -1f;
+            human_rotateY = 0f;
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(MainWindow.animationSpeed);
             timer.Tick += new EventHandler(AnimateHuman);
@@ -409,7 +410,7 @@ namespace AssimpSample
             }
             else if (iteration >= 50 && iteration < 60)
             {
-                To2thStep();
+                To2ndStep();
             }
             else if (iteration >= 60 && iteration < 70)
             {
@@ -428,7 +429,7 @@ namespace AssimpSample
             human_coordinateX -= 0.05f;
             human_coordinateY -= 0.15f;
             human_coordinateZ += 0.3f;
-            //human_rotateY += -10f;
+            human_rotateY += -8f;
         }
 
         private void To14thStep()
@@ -437,7 +438,7 @@ namespace AssimpSample
             human_coordinateX -= 0.25f;
             human_coordinateY -= 0.15f;
             human_coordinateZ += 0.05f;
-            //human_rotateY += -10f;
+            human_rotateY += -3f;
         }
 
         private void To11thStep()
@@ -446,7 +447,7 @@ namespace AssimpSample
             human_coordinateX -= 0.22f;
             human_coordinateY -= 0.15f;
             human_coordinateZ -= 0.18f;
-            //human_rotateY += -10f;
+            human_rotateY += -5f;
         }
 
         private void To8thStep()
@@ -455,7 +456,7 @@ namespace AssimpSample
             human_coordinateX += 0.03f;
             human_coordinateY -= 0.15f;
             human_coordinateZ -= 0.2f;
-            //human_rotateY += -10f;
+            human_rotateY += -5f;
         }
 
         private void To5thStep()
@@ -464,16 +465,16 @@ namespace AssimpSample
             human_coordinateX += 0.29f;
             human_coordinateY -= 0.15f;
             human_coordinateZ -= 0.18f;
-            //human_rotateY += -10f;
+            human_rotateY += -7f;
         }
 
-        private void To2thStep()
+        private void To2ndStep()
         {
             iteration++;
             human_coordinateX += 0.23f;
             human_coordinateY -= 0.15f;
             human_coordinateZ += 0.23f;
-            //human_rotateY += -10f;
+            human_rotateY += -5f;
         }
 
         private void ToFloor()
@@ -481,7 +482,7 @@ namespace AssimpSample
             iteration++;
             human_coordinateY -= 0.09f;
             human_coordinateZ += 0.2f;
-            //human_rotateY += -10f;
+            human_rotateY += -3f;
         }
 
         /// <summary>
