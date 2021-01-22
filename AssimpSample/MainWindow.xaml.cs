@@ -101,7 +101,7 @@ namespace AssimpSample
                     {
                         if (!m_world.AnimationInProgress)
                         {
-                            if(m_world.RotationX >= 0)
+                            if(m_world.RotationX >= -35)
                                 m_world.RotationX -= 5.0f;
                             else
                                 MessageBox.Show("Nije dozvoljeno ici ispod podloge!");
@@ -112,7 +112,7 @@ namespace AssimpSample
                     {
                         if (!m_world.AnimationInProgress)
                         {
-                            if (m_world.RotationX <= 85)
+                            if (m_world.RotationX <= 45)
                                 m_world.RotationX += 5.0f;
                             else
                                 MessageBox.Show("Nije dozvoljeno da podloga bude postavljena naopako!");

@@ -38,17 +38,17 @@ namespace AssimpSample
         /// <summary>
         ///	 Ugao rotacije sveta oko X ose.
         /// </summary>
-        private float m_xRotation = 0.0f;
+        private float m_xRotation = 25.0f;
 
         /// <summary>
         ///	 Ugao rotacije sveta oko Y ose.
         /// </summary>
-        private float m_yRotation = 0.0f;
+        private float m_yRotation = -150.0f;
 
         /// <summary>
         ///	 Udaljenost scene od kamere.
         /// </summary>
-        private float m_sceneDistance = 30.0f;
+        private float m_sceneDistance = 12.0f;
 
         /// <summary>
         ///	 Sirina OpenGL kontrole u pikselima.
@@ -267,7 +267,7 @@ namespace AssimpSample
             gl.MatrixMode(OpenGL.GL_PROJECTION);      // selektuj Projection Matrix
             gl.LoadIdentity();
             gl.Perspective(50.0, (double)m_width / (double)m_height, 0.5, 20000.0);
-            //gl.LookAt(-3f, 12.5f, 4f, -3f, 11f, 1f, 0.0f, 1.0f, 0.0f);
+            gl.LookAt(3f, 12.5f, 4f, 3f, 11f, 1f, 0.0f, 1.0f, 0.0f);
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
             gl.LoadIdentity();
 
@@ -275,7 +275,6 @@ namespace AssimpSample
             gl.Translate(0.0f, 0.0f, -m_sceneDistance);
             gl.Rotate(m_xRotation, 1.0f, 0.0f, 0.0f);
             gl.Rotate(m_yRotation, 0.0f, 1.0f, 0.0f);
-            //gl.Rotate(0f, 180f, 0f);
 
             SetupLighting(gl);
             DrawHuman(gl);
@@ -389,33 +388,19 @@ namespace AssimpSample
         public void AnimateHuman(object sender, EventArgs e)
         {
             if (iteration < 10)
-            {
                 To17thStep();
-            }
             else if (iteration >= 10 && iteration < 20)
-            {
                 To14thStep();
-            }
             else if (iteration >= 20 && iteration < 30)
-            {
                 To11thStep();
-            }
             else if (iteration >= 30 && iteration < 40)
-            {
                 To8thStep();
-            }
             else if (iteration >= 40 && iteration < 50)
-            {
                 To5thStep();
-            }
             else if (iteration >= 50 && iteration < 60)
-            {
                 To2ndStep();
-            }
             else if (iteration >= 60 && iteration < 70)
-            {
                 ToFloor();
-            }
             else
             {
                 timer.Stop();
