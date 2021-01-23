@@ -208,7 +208,6 @@ namespace AssimpSample
                 image.UnlockBits(imageData);
                 image.Dispose();
             }
-            //SetupLighting(gl);
 
             m_scene.LoadScene();
             m_scene.Initialize();
@@ -216,11 +215,7 @@ namespace AssimpSample
 
         private void SetupLighting(OpenGL gl)
         {
-            //gl.Enable(OpenGL.GL_COLOR_MATERIAL);
-            //gl.ColorMaterial(OpenGL.GL_FRONT, OpenGL.GL_AMBIENT_AND_DIFFUSE);
-
             gl.Enable(OpenGL.GL_NORMALIZE);
-
             gl.ShadeModel(OpenGL.GL_SMOOTH);
 
             float[] global_ambient = new float[] { 0.2f, 0.2f, 0.2f, 1.0f };
@@ -261,7 +256,6 @@ namespace AssimpSample
         public void Draw(OpenGL gl)
         {
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
-            //gl.LookAt(5.0f, 7.0f, 0f, 5.0f, 7.0f, 1f, 0.0f, 1.0f, 0.0f);
             gl.Enable(OpenGL.GL_AUTO_NORMAL);
             gl.Viewport(0, 0, m_width, m_height);
             gl.MatrixMode(OpenGL.GL_PROJECTION);      // selektuj Projection Matrix
@@ -333,21 +327,30 @@ namespace AssimpSample
         private void DrawSurface(OpenGL gl)
         {
             gl.Disable(OpenGL.GL_AUTO_NORMAL);
-            gl.BindTexture(OpenGL.GL_TEXTURE_2D, m_textures[(int)TextureObjects.Surface]);
+            //gl.BindTexture(OpenGL.GL_TEXTURE_2D, m_textures[(int)TextureObjects.Surface]);
             gl.PushMatrix();
+            gl.BindTexture(OpenGL.GL_TEXTURE_2D, m_textures[(int)TextureObjects.Surface]);
 
+            gl.MatrixMode(OpenGL.GL_TEXTURE);
+            gl.LoadIdentity();
+            gl.Scale(10f, 10f, 10f);
+            gl.MatrixMode(OpenGL.GL_MODELVIEW);
+            
             gl.Begin(OpenGL.GL_QUADS);
             gl.Normal(0f, -1f, 0f);
             gl.TexCoord(0.0f, 0.0f);
             gl.Color(0f, 1f, 0f);
-            gl.Vertex(10f, -1f, -16.85f);
-            gl.TexCoord(0.0f, 10.0f);
+            gl.Vertex(10f, -1f, -17.0f);
+            //gl.TexCoord(0.0f, 10.0f);
+            gl.TexCoord(0.0f, 1.0f);
             gl.Color(0f, 0f, 1f);
-            gl.Vertex(-10f, -1f, -16.85f);
-            gl.TexCoord(10.0f, 10.0f);
+            gl.Vertex(-10f, -1f, -17.0f);
+            //gl.TexCoord(10.0f, 10.0f);
+            gl.TexCoord(1.0f, 1.0f);
             gl.Color(1f, 1f, 0f);
             gl.Vertex(-10f, -1f, 17f);
-            gl.TexCoord(10.0f, 0.0f);
+            //gl.TexCoord(10.0f, 0.0f);
+            gl.TexCoord(1.0f, 0.0f);
             gl.Color(1f, 0f, 0f);
             gl.Vertex(10f, -1f, 17f);
             gl.End();
@@ -358,6 +361,12 @@ namespace AssimpSample
         private void DrawStairs(OpenGL gl)
         {
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, m_textures[(int)TextureObjects.Stairs]);
+
+            gl.MatrixMode(OpenGL.GL_TEXTURE);
+            gl.LoadIdentity();
+            gl.Scale(1f, 1f, 1f);
+            gl.MatrixMode(OpenGL.GL_MODELVIEW);
+
             Cube cube = new Cube();
             for (int i = 0; i < 20; i++)
             {
